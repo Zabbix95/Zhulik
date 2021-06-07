@@ -9,22 +9,24 @@ public class DoorTrigger : MonoBehaviour
 
     private void Start() 
     {
-        _animation = gameObject.GetComponentInChildren<Animation>();         
+        _animation = GetComponentInChildren<Animation>();         
     }
 
      private void OnTriggerEnter(Collider collision) 
      {         
-         if (collision.TryGetComponent<PlayerMover>(out PlayerMover player)) 
-         {
-             _animation.Play("DoorOpen");             
-         }         
+         if (collision.TryGetComponent<PlayerMover>(out PlayerMover player))         
+             Animate("DoorOpen");
      }
 
     private void OnTriggerExit(Collider collision) 
     {
-        if (collision.TryGetComponent<PlayerMover>(out PlayerMover player)) 
-        {
-            _animation.Play("DoorClose");             
-        }
+        if (collision.TryGetComponent<PlayerMover>(out PlayerMover player))        
+            Animate("DoorClose"); 
+    }
+
+    private void Animate(string name) 
+    {
+        if (_animation.isPlaying == false)       
+            _animation.Play(name);        
     }
 }
